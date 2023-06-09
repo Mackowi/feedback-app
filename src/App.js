@@ -1,9 +1,14 @@
+import Header from './components/Header'
+import FeedbackItem from './components/FeedbackItem'
+
 function App() {
   return (
-    <div className='container'>
-      <h1>Hello from App</h1>
-    </div>
+    <>
+      <Header />
+      <div className='container'>
+        <FeedbackItem />
+      </div>
+    </>
   )
 }
-
 export default App
