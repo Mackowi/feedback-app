@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import Card from './shared/Card'
 import Button from './shared/Button'
 import RatingSelect from './RatingSelect'
@@ -10,8 +9,19 @@ function FeedbackForm() {
   const [rating, setRating] = useState(10)
   const [btnDisabled, setBtnDisabled] = useState(true)
   const [message, setMessage] = useState('')
+  const [cancel, setCancel] = useState(false)
 
-  const { addFeedback } = useContext(FeedbackContext)
+  const { addFeedback, feedbackEdit, updateFeedback } =
+    useContext(FeedbackContext)
+
+  useEffect(() => {
+    if (feedbackEdit.edit === true) {
+      setBtnDisabled(false)
+      setText(feedbackEdit.item.text)
+      setRating(feedbackEdit.item.rating)
+      setCancel(true)
+    }
+  }, [feedbackEdit])
 
   const handleTextChange = (e) => {
     // empty message
@@ -37,11 +47,20 @@ function FeedbackForm() {
         text,
         rating,
       }
-
-      addFeedback(newFeedback)
+      if (feedbackEdit.edit === true) {
+        updateFeedback(feedbackEdit.item.id, newFeedback)
+        feedbackEdit.edit = false
+      } else {
+        addFeedback(newFeedback)
+      }
       setText('')
-      setRating(10)
     }
+  }
+
+  const handleCancel = () => {
+    setCancel(false)
+    setText('')
+    feedbackEdit.edit = false
   }
 
   return (
@@ -57,10 +76,20 @@ function FeedbackForm() {
             value={text}
           />
           <Button type='submit' isDisabled={btnDisabled}>
-            Send
+            {feedbackEdit.edit === true ? 'Edit' : 'Send'}
           </Button>
         </div>
         {message && <div className='message'>{message}</div>}
+        {cancel && (
+          <div className='edit-group'>
+            <button
+              onClick={handleCancel}
+              className='cancel-edit btn btn-primary'
+            >
+              {'Cancel Edit'}
+            </button>
+          </div>
+        )}
       </form>
     </Card>
   )

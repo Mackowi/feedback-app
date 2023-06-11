@@ -105,12 +105,17 @@ header a {
   color: #fff;
 }
 
-.input-group {
+.input-group, .edit-group {
   display: flex;
   flex-direction: row;
   border: 1px solid #ccc;
   padding: 8px 10px;
   border-radius: 8px;
+}
+
+.edit-group {
+  margin: 8px 0 -24px 0;
+  border: none;
 }
 
 input {
@@ -188,6 +193,10 @@ input:focus {
   padding-top: 10px;
   text-align: center;
   color: rebeccapurple;
+}
+
+.cancel-edit {
+  margin: auto;
 }
 
 /* FIX: Remove position: absolute to keep about icon at the bottom of the
