@@ -50,6 +50,7 @@ function FeedbackForm() {
       if (feedbackEdit.edit === true) {
         updateFeedback(feedbackEdit.item.id, newFeedback)
         feedbackEdit.edit = false
+        setCancel(false)
       } else {
         addFeedback(newFeedback)
       }

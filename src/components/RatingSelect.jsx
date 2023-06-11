@@ -4,7 +4,7 @@ import FeedbackContext from '../context/FeedbackContext'
 function RatingSelect({ select }) {
   const [selected, setSelected] = useState(10)
 
-  const { feedbackEdit } = useContext(FeedbackContext)
+  const { feedbackEdit, feedback } = useContext(FeedbackContext)
 
   const handleChange = (e) => {
     // + changes the string to number
@@ -15,6 +15,10 @@ function RatingSelect({ select }) {
   useEffect(() => {
     setSelected(feedbackEdit.item.rating)
   }, [feedbackEdit])
+
+  useEffect(() => {
+    setSelected(0)
+  }, [feedback])
 
   return (
     <ul className='rating'>
